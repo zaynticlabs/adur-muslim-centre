@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adur Muslim Centre | Mosque in Shoreham-by-Sea, West Sussex</title>
+    <meta name="description" content="Adur Muslim Centre — serving the Muslim community of Shoreham-by-Sea, Lancing and Southwick. Daily prayers, Jumu'ah, Islamic school and community events. 16 Brunswick Road, BN43 5WB.">
+    <meta property="og:title" content="Adur Muslim Centre, Shoreham-by-Sea">
+    <meta name="keywords" content="mosque Shoreham, Muslim Shoreham-by-Sea, prayer times Shoreham, Adur Muslim Centre, mosque West Sussex, Jumu'ah Shoreham, Islam Sussex">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Prayer time calculation -->
+    <script src="https://cdn.jsdelivr.net/npm/adhan@4.4.3/lib/bundles/adhan.umd.min.js"></script>
+</head>
+<body>
+    <!-- Top Bismillah Bar -->
+    <div class="top-bar">
+        <div class="container text-center">
+            <span class="bismillah-text" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">☪</span>
+                <span class="logo-text">Adur Muslim Centre</span>
+            </a>
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Open Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#prayer-times">Prayer Times</a></li>
+                <li><a href="#welcome">About</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#donate">Donate</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <header id="hero" class="hero section-dark">
+        <div class="hero-pattern"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h2 class="hero-arabic reveal" dir="rtl">مَرْحَبًا بِكُمْ</h2>
+            <h1 class="hero-title reveal delay-1">Adur Muslim Centre</h1>
+            <p class="hero-subtitle reveal delay-2">Serving the Muslim Community of Shoreham-by-Sea, Lancing & Southwick since 1995</p>
+            <div class="hero-cta reveal delay-3">
+                <a href="#prayer-times" class="btn btn-primary">Prayer Times Today</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+            </div>
+            
+            <div class="hero-prayer-bar reveal delay-4" id="hero-prayer-bar">
+                <div class="mini-prayer"><span class="mp-name">Fajr</span> <span id="mini-fajr">--:--</span></div>
+                <div class="mini-prayer"><span class="mp-name">Dhuhr</span> <span id="mini-dhuhr">--:--</span></div>
+                <div class="mini-prayer"><span class="mp-name">Asr</span> <span id="mini-asr">--:--</span></div>
+                <div class="mini-prayer"><span class="mp-name">Maghrib</span> <span id="mini-maghrib">--:--</span></div>
+                <div class="mini-prayer"><span class="mp-name">Isha</span> <span id="mini-isha">--:--</span></div>
+            </div>
+            
+            <div class="hero-image-wrapper reveal delay-5">
+                <img src="images/mosque1.png" alt="Adur Muslim Centre exterior" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="img-placeholder" style="display:none;">
+                    <span>🕌</span>
+                    <p>Mosque Photo</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 2: LIVE PRAYER TIMES -->
+    <section id="prayer-times" class="prayer-times-section section-padding">
+        <div class="container">
+            <div class="section-header text-center hide-print">
+                <h2 class="section-title"><span class="icon-gold">☪</span> Salah Prayer Times</h2>
+                <div class="divider"><span class="diamond">◆</span></div>
+            </div>
+
+            <div class="date-display text-center hide-print">
+                <h3 id="gregorian-date" class="gregorian">Loading Date...</h3>
+                <h4 id="hijri-date" class="hijri text-gold">--</h4>
+            </div>
+
+            <div class="next-prayer-card text-center hide-print" id="next-prayer-card">
+                <h3>Next Prayer: <span id="next-prayer-name" class="highlight">--</span></h3>
+                <div class="countdown" id="countdown-timer">--:--:--</div>
+                <p>Time: <span id="next-prayer-time" class="highlight">--:--</span></p>
+            </div>
+
+            <div class="prayer-cards-grid hide-print" id="prayer-cards-grid">
+                <!-- Cards injected by JS -->
+            </div>
+
+            <div class="prayer-notes hide-print">
+                <div class="note-card">
+                    <h4>Tahajjud</h4>
+                    <p id="tahajjud-time" class="time-text">Last third of the night: --:--</p>
+                </div>
+                <div class="note-card">
+                    <h4>Jumu'ah</h4>
+                    <p class="time-text mt-2">1st Jamaat: 1:15 PM<br>2nd Jamaat: 1:45 PM</p>
+                    <small>Every Friday — please arrive 15 minutes early</small>
+                </div>
+            </div>
+
+            <!-- Prayer Selector Tabs -->
+            <div class="prayer-selector hide-print">
+                <div class="prayer-tabs">
+                    <button class="tab-btn active" data-prayer="fajr">Fajr</button>
+                    <button class="tab-btn" data-prayer="dhuhr">Dhuhr</button>
+                    <button class="tab-btn" data-prayer="asr">Asr</button>
+                    <button class="tab-btn" data-prayer="maghrib">Maghrib</button>
+                    <button class="tab-btn" data-prayer="isha">Isha</button>
+                </div>
+                <div id="prayer-info-panel" class="prayer-info-panel text-center">
+                    <!-- Updated via JS -->
+                </div>
+            </div>
+
+            <!-- Monthly Timetable -->
+            <div class="monthly-timetable print-visible">
+                <div class="table-header text-center">
+                    <h3>Monthly Timetable</h3>
+                    <p class="print-only">Adur Muslim Centre - 16 Brunswick Road</p>
+                </div>
+                <div class="month-nav hide-print">
+                    <button id="prev-month" class="nav-btn">&laquo; Prev</button>
+                    <h4 id="current-month-display">Month Year</h4>
+                    <button id="next-month" class="nav-btn">Next &raquo;</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="timetable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Fajr</th>
+                                <th>Sunrise</th>
+                                <th>Dhuhr</th>
+                                <th>Asr</th>
+                                <th>Maghrib</th>
+                                <th>Isha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetable-body">
+                            <!-- JS Populated Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: WELCOME MESSAGE -->
+    <section id="welcome" class="welcome-section section-padding bg-light">
+        <div class="container">
+            <div class="welcome-grid">
+                <div class="welcome-image reveal">
+                    <img src="images/mosque-interior.png" alt="Inside Adur Muslim Centre" class="featured-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="img-placeholder" style="display:none; height: 100%; min-height: 400px;">
+                        <span>🕌</span>
+                        <p>Inside Adur Muslim Centre</p>
+                    </div>
+                </div>
+                <div class="welcome-content reveal delay-1">
+                    <h4 class="subheading text-gold">Assalamu Alaikum wa Rahmatullahi wa Barakatuh</h4>
+                    <h2 class="title">Welcome to Adur Muslim Centre</h2>
+                    <p>Adur Muslim Centre is the heart of the Muslim community in Shoreham-by-Sea and the wider Adur district. We serve brothers and sisters from Shoreham, Lancing, Southwick and surrounding areas, providing a warm and welcoming space for worship, education and community support.</p>
+                    <p>Our doors are open to all five times a day for daily prayers, and we host Friday Jumu'ah, Eid prayers, Islamic education classes, and community events throughout the year. We welcome Muslims of all backgrounds and also warmly receive non-Muslim visitors who wish to learn about Islam.</p>
+                    <p>We are committed to serving Allah (SWT) and our community with sincerity, brotherhood and compassion. May Allah bless our community and all who visit this centre. Ameen.</p>
+                    <p class="signature">— The Imam and Management Committee,<br><strong>Adur Muslim Centre</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: ABOUT US -->
+    <section id="about" class="about-section section-padding">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-card reveal">
+                    <div class="icon">🕌</div>
+                    <h3>Our Mission</h3>
+                    <p>To provide a place of worship, learning and community for Muslims in the Adur district, following the teachings of the Quran and Sunnah of the Prophet Muhammad (PBUH).</p>
+                </div>
+                <div class="about-card reveal delay-1">
+                    <div class="icon">🤝</div>
+                    <h3>Our Community</h3>
+                    <p>We serve a diverse Muslim community from various backgrounds — South Asian, Arab, African, and indigenous British Muslims — united by faith and love for Allah.</p>
+                </div>
+                <div class="about-card reveal delay-2">
+                    <div class="icon">🌙</div>
+                    <h3>Open to All</h3>
+                    <p>We welcome non-Muslim visitors, interfaith dialogue, and those curious about Islam. Please contact us to arrange a visit.</p>
+                </div>
+            </div>
+            <div class="stats-bar reveal delay-3">
+                <span>5 Daily Prayers</span>
+                <span class="dot">•</span>
+                <span>Est. 1995</span>
+                <span class="dot">•</span>
+                <span>Serving Adur District</span>
+                <span class="dot">•</span>
+                <span>Open 7 Days a Week</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: HISTORY & VISION -->
+    <section id="history" class="history-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Our History & Vision</h2>
+                <div class="divider"><span class="diamond">◆</span></div>
+            </div>
+            
+            <div class="tabs-container">
+                <div class="toggle-buttons text-center">
+                    <button class="toggle-btn active" data-target="content-history">History</button>
+                    <button class="toggle-btn" data-target="content-vision">Vision</button>
+                </div>
+
+                <div id="content-history" class="tab-content active">
+                    <div class="timeline">
+                        <div class="timeline-item reveal">
+                            <div class="year">1995</div>
+                            <div class="content">
+                                <h3>Adur Muslim Centre Established</h3>
+                                <p>A small group of Muslim families in Shoreham came together to establish a place of worship for the growing Muslim community in the Adur district.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="year">2000</div>
+                            <div class="content">
+                                <h3>Community Growth</h3>
+                                <p>The centre expanded its activities to include weekend Islamic education classes for children and regular lectures for adults.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="year">2008</div>
+                            <div class="content">
+                                <h3>New Premises</h3>
+                                <p>The centre moved to its current location at 16 Brunswick Road, providing a larger space for the growing congregation.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="year">2015</div>
+                            <div class="content">
+                                <h3>Ramadan & Eid Expansion</h3>
+                                <p>The centre began hosting large community iftars during Ramadan and Eid prayers for hundreds of worshippers from across West Sussex.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="year">2020</div>
+                            <div class="content">
+                                <h3>Digital Outreach</h3>
+                                <p>During the pandemic, the centre launched online lectures and support services, connecting the community digitally.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item reveal">
+                            <div class="year">2024</div>
+                            <div class="content">
+                                <h3>Ongoing Development</h3>
+                                <p>Plans for further development of facilities to better serve the needs of the growing Muslim community in the Adur district.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-vision" class="tab-content" style="display:none;">
+                    <div class="vision-content text-center">
+                        <h3 class="quran-quote text-gold" dir="rtl">وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ</h3>
+                        <p class="translation italic">"And I did not create the jinn and mankind except to worship Me." — Quran 51:56</p>
+                        
+                        <div class="vision-pillars">
+                            <div class="pillar-card">
+                                <h4>Worship</h4>
+                                <p>A centre where every Muslim can fulfil their religious obligations with ease and comfort</p>
+                            </div>
+                            <div class="pillar-card">
+                                <h4>Education</h4>
+                                <p>Quranic education, Islamic knowledge and character development for children and adults</p>
+                            </div>
+                            <div class="pillar-card">
+                                <h4>Community</h4>
+                                <p>A united, caring community that supports one another and contributes positively to Shoreham and beyond</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: SERVICES -->
+    <section id="services" class="services-section section-padding">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Our Services</h2>
+                <div class="divider"><span class="diamond">◆</span></div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🕌</span>
+                        <h3>Daily Prayers</h3>
+                        <p>Five daily Salah in congregation. All welcome. Wudu facilities available.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-1">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">📖</span>
+                        <h3>Jumu'ah</h3>
+                        <p>Friday congregational prayers at 1:15 PM and 1:45 PM. Khutbah in English and Arabic.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-2">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🌙</span>
+                        <h3>Ramadan</h3>
+                        <p>Tarawih prayers every night during Ramadan. Community iftar on weekends.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🎓</span>
+                        <h3>Islamic School</h3>
+                        <p>Weekend Quran and Islamic studies classes for children aged 5-16. Contact us to enrol.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-1">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">👶</span>
+                        <h3>Nikah Ceremonies</h3>
+                        <p>Islamic marriage ceremonies conducted by the Imam. Contact us for more information.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-2">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🤲</span>
+                        <h3>Janazah</h3>
+                        <p>Funeral prayers and community support for bereaved families. Available when needed.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">💬</span>
+                        <h3>Islamic Guidance</h3>
+                        <p>One-to-one Islamic counselling and guidance from the Imam. By appointment.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-1">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🏠</span>
+                        <h3>New Muslim Support</h3>
+                        <p>Support, mentoring and resources for those new to Islam. You are welcome here.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal delay-2">
+                    <div class="card-arch"></div>
+                    <div class="card-content">
+                        <span class="icon">🤝</span>
+                        <h3>Community Events</h3>
+                        <p>Eid celebrations, charity drives, interfaith events and community gatherings throughout the year.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: NEWS & ANNOUNCEMENTS -->
+    <section id="news" class="news-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">News & Announcements</h2>
+                <div class="divider"><span class="diamond">◆</span></div>
+            </div>
+            <div class="news-grid">
+                <div class="news-card reveal">
+                    <div class="news-badge">Announcement</div>
+                    <div class="news-date">Friday, 4 April 2026</div>
+                    <h3 class="news-title">Jumu'ah Prayer Time Update — British Summer Time</h3>
+                    <p class="news-body">Please note that following the clocks going forward, Jumu'ah 1 prayer will now be held at 1:15 PM until further notice. And Jumu'ah 2 prayer will now be held at 1:45 PM until further notice. Please plan accordingly.</p>
+                </div>
+                <!-- Additional placeholder cards can be added here if needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: DONATE -->
+    <section id="donate" class="donate-section section-padding section-dark">
+        <div class="hero-pattern"></div>
+        <div class="container text-center" style="position: relative; z-index: 3;">
+            <span class="icon-gold" style="font-size:3rem; margin-bottom:20px; display:block;">☪</span>
+            <h2 class="section-title text-white">Support Your Mosque</h2>
+            <div class="divider"><span class="diamond">◆</span></div>
+            
+            <p class="donate-text mt-4">"The believer's shade on the Day of Resurrection will be his charity." <br><small>— Al-Tirmidhi</small></p>
+            <p class="mb-4" style="max-width: 800px; margin: 0 auto; color:#ddd; font-size:1.1rem; margin-top: 20px;">
+                Adur Muslim Centre relies purely on the generous donations of our community. Your Lillah and Sadaqah help maintain the House of Allah, support our educational programs, and provide essential community services. Please donate generously. 
+            </p>
+            
+            <div class="donate-cards-wrapper mt-4">
+                <div class="donate-card text-center" style="margin: 0 auto; max-width: 500px;">
+                    <h3 style="margin-bottom: 25px;">Bank Transfer</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Account Name:</strong> Adur Muslim Centre</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Sort Code:</strong> 00-00-00</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Account No:</strong> 12345678</p>
+                    <p style="font-size: 1.1rem;"><strong>Reference:</strong> Donation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: CONTACT US -->
+    <section id="contact" class="contact-section section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="divider"><span class="diamond">◆</span></div>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <h3><span class="icon-gold">🕌</span> Visit Us</h3>
+                    
+                    <div class="info-block">
+                        <span class="icon">📍</span>
+                        <p>16 Brunswick Road<br>Shoreham-by-Sea, BN43 5WB</p>
+                    </div>
+                    <div class="info-block">
+                        <span class="icon">📞</span>
+                        <p>[Phone Number - TBD]</p>
+                    </div>
+                    <div class="info-block">
+                        <span class="icon">✉️</span>
+                        <p>[Email - TBD]</p>
+                    </div>
+                    
+                    <div class="opening-times">
+                        <h4>Opening Times</h4>
+                        <p>Open for all 5 daily prayers — see prayer timetable above.<br>Office hours: Mon-Fri, 9:00 AM - 5:00 PM</p>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">Facebook</a><br>
+                        <a href="#" aria-label="Instagram">Instagram</a><br>
+                        <a href="#" aria-label="YouTube">YouTube</a>
+                    </div>
+
+                    <div class="map-container mt-4">
+                        <div style="border-radius: 8px; overflow: hidden; border: 2px solid var(--primary); margin-bottom: 20px;">
+                            <iframe 
+                                src="https://maps.google.com/maps?q=Adur%20Muslim%20Centre,%2016%20Brunswick%20Rd,%20Shoreham-by-Sea%20BN43%205WB&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                                width="100%" 
+                                height="250" 
+                                style="border:0; display:block;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        <a href="https://maps.google.com/?q=16+Brunswick+Rd,+Shoreham-by-Sea,+BN43+5WB" target="_blank" class="map-link">
+                            📍 Open Directions in Google Maps App ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper reveal delay-1">
+                    <h3>Send us a Message</h3>
+                    <form id="contact-form" class="contact-form">
+                        <div id="form-success" class="form-success" style="display:none;">
+                            JazakAllah Khairan! Your message has been received. We will be in touch soon, In Sha Allah. ✓
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" required placeholder="Your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" required placeholder="your.email@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Optional">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" required>
+                                <option value="" disabled selected>Select a subject...</option>
+                                <option value="general">General Enquiry</option>
+                                <option value="prayer">Prayer Times Query</option>
+                                <option value="school">Islamic School Enrolment</option>
+                                <option value="nikah">Nikah / Marriage Ceremony</option>
+                                <option value="janazah">Janazah / Funeral Query</option>
+                                <option value="new-muslim">New Muslim Support</option>
+                                <option value="booking">Book the Centre</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" rows="5" required placeholder="How can we help you?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: FOOTER -->
+    <footer class="footer">
+        <div class="footer-top">
+            <h3 class="footer-bismillah text-center" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h3>
+        </div>
+        
+        <div class="container footer-grid">
+            <div class="footer-col about">
+                <a href="#" class="logo footer-logo">
+                    <span class="logo-icon text-gold">☪</span>
+                    <span class="logo-text">Adur Muslim Centre</span>
+                </a>
+                <p class="tagline">Serving the Community of Shoreham-by-Sea since 1995</p>
+                <div class="footer-contact">
+                    <p>📍 16 Brunswick Road, Shoreham-by-Sea, BN43 5WB</p>
+                </div>
+            </div>
+            
+            <div class="footer-col links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#prayer-times">Prayer Times</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#donate">Donate</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col subscribe">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook">Fb</a>
+                    <a href="#" aria-label="Instagram">Ig</a>
+                    <a href="#" aria-label="YouTube">Yt</a>
+                </div>
+                <h4 class="mt-4">Subscribe for Updates</h4>
+                <form class="subscribe-form" id="subscribe-form">
+                    <input type="email" placeholder="Email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                    <div id="sub-success" style="display:none; color:#c9a84c; font-size:14px; margin-top:8px;">Subscribed successfully!</div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container flex-between">
+                <p>&copy; <span id="current-year">2026</span> Adur Muslim Centre | 16 Brunswick Road, Shoreham-by-Sea, BN43 5WB | Registered Charity</p>
+                <p class="built-with">Built with ❤️ for our community</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">☪</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
